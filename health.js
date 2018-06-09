@@ -1,34 +1,29 @@
-// JavaScript
-
 var xhr = new XMLHttpRequest();
-xhr.open('GET', "health.json", true);
+xhr.open('GET', "health2", true);
 xhr.responseType = 'text';
 xhr.send();
 
 xhr.onload = function() { 
   if (xhr.status === 200) {
     var myStuff = JSON.parse(xhr.responseText);
-    var count = Object.keys(myStuff).length;
+    //var count = Object.keys(myStuff).length;
     //console.log("count is " + count);
   }
-  //document.getElementById('message1').innerHTML = myStuff.status1;
-  //document.getElementById('message2').innerHTML = myStuff.status2;
-
-  str = "";
-  str += "result: status1 " + myStuff.status2;
-  //document.getElementById('message3').innerHTML = str;
-
   var table = document.createElement('table');
   var tableBody = document.createElement('tbody');
-  var tr = document.createElement('tr');
-  var th = document.createElement('th');
-  th.innerHTML = "Health Status";
-  tr.appendChild(th);
+  var header = table.createTHead();
+  var row = header.insertRow(0);
+  var cell = row.insertCell(0);
+  cell.style.border="1px solid black";
+  cell.innerHTML = "Host";
+  var cell = row.insertCell(1);
+  cell.style.border="1px solid black";
+  cell.innerHTML = "Status";
 
   for (var key in myStuff) {
     var row = document.createElement('tr');
+    console.log("key is " + key);
     if (myStuff.hasOwnProperty(key)) {
-      //        console.log(key + " " + myStuff[key])
       var cell = document.createElement('td');
       cell.appendChild(document.createTextNode(key + " "));
       cell.style.border="1px solid black";
@@ -38,12 +33,10 @@ xhr.onload = function() {
       cell.style.border="1px solid black";
       row.appendChild(cell);
       }
-
     tableBody.appendChild(row);
   };
 
   table.appendChild(tableBody);
   document.body.appendChild(table);
-  document.getElementById("table").style.borderCollapse = "collapse";
-
+  table.style.borderCollapse = "collapse";
 }
